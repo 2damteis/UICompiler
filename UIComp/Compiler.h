@@ -34,6 +34,7 @@ private:
     unordered_map<string, file_time_type> _paths;
     file_time_type last_time_alone;
 
+    void checkDir();
     static char* argOrNull(int index, int argc, char** argv);
     void compileFile(path file);
     bool contains(const std::string& key);

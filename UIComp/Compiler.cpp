@@ -115,44 +115,48 @@ void Compiler::compile() {
 
 void Compiler::watch() {
     string cmd = fileSelected == root ? "\"" + designer.string() + "\"" : "\"\"" + designer.string() + "\" \"" + fileSelected.string() + "\"\"";
-    bool running = true;
+    atomic<bool> running = true;
 
-    thread th([cmd, &running]() mutable {
+    thread th([cmd, &running]() {
         system(cmd.c_str());
         running = false;
     });
     
     while (running) {
         this_thread::sleep_for(interval);
-
-        if (isDir) {
-            // Comprobamos si se ha eliminado un archivo
-            auto it = _paths.begin();
-            for (auto it = _paths.begin(); it != _paths.end(); ++it) {
-                if (!exists(it->first))
-                    it = _paths.erase(it);
-            }
-
-            // Comprobamos si se ha añadido o modificado un archivo
-            for (auto& file : recursive_directory_iterator(root)) {
-                if (file.path().extension().compare(".ui"))
-                    continue;
-
-                auto last_write = last_write_time(file);
-
-                if (!contains(file.path().string()) || _paths[file.path().string()] != last_write) {
-                    _paths[file.path().string()] = last_write;
-                    compileFile(file.path());
-                }
-            }
-        }
-        else if (last_write_time(root) != last_time_alone) {
-            last_time_alone = last_write_time(root);
-            compileFile(root);
-        }
+        checkDir();
     }
 
+    checkDir();
     th.join();
+}
+
+void Compiler::checkDir() {
+    if (isDir) {
+        // Comprobamos si se ha eliminado un archivo
+        auto it = _paths.begin();
+        for (auto it = _paths.begin(); it != _paths.end(); ++it) {
+            if (!exists(it->first))
+                it = _paths.erase(it);
+        }
+
+        // Comprobamos si se ha añadido o modificado un archivo
+        for (auto& file : recursive_directory_iterator(root)) {
+            if (file.path().extension().compare(".ui"))
+                continue;
+
+            auto last_write = last_write_time(file);
+
+            if (!contains(file.path().string()) || _paths[file.path().string()] != last_write) {
+                _paths[file.path().string()] = last_write;
+                compileFile(file.path());
+            }
+        }
+    }
+    else if (last_write_time(root) != last_time_alone) {
+        last_time_alone = last_write_time(root);
+        compileFile(root);
+    }
 }
 
 char* Compiler::argOrNull(int index, int argc, char** argv) {
