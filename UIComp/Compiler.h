@@ -2,6 +2,8 @@
 
 #include <unordered_map>
 #include <filesystem>
+#include <thread>
+#include <chrono>
 
 #include "UIComp.h"
 
@@ -23,10 +25,11 @@ private:
     path root;
     bool isDir;
     bool watchMode;
-    int interval;
+    chrono::duration<int, std::milli> interval;
 
     unordered_map<string, file_time_type> _paths;
 
-    static char* _argOrNull(int index, int argc, char** argv);
-    void _compileFile(path file);
+    static char* argOrNull(int index, int argc, char** argv);
+    void compileFile(path file);
+    bool contains(const std::string& key);
 };
