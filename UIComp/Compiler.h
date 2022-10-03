@@ -4,6 +4,8 @@
 #include <filesystem>
 #include <thread>
 #include <chrono>
+#include <Windows.h>
+#include <thread>
 
 #include "UIComp.h"
 
@@ -12,7 +14,7 @@ using namespace filesystem;
 
 class Compiler {
 public:
-    Compiler(path compiler, path root, bool isDir, bool watchMode, int interval);
+    Compiler(path compiler, path root, bool isDir, bool linkMode, path designer, path fileSelected, int interval);
 
     static Compiler* getCompiler(int argc, char** argv);
 
@@ -24,10 +26,13 @@ private:
     path compiler;
     path root;
     bool isDir;
-    bool watchMode;
+    bool linkMode;
+    path designer;
+    path fileSelected;
     chrono::duration<int, std::milli> interval;
 
     unordered_map<string, file_time_type> _paths;
+    file_time_type last_time_alone;
 
     static char* argOrNull(int index, int argc, char** argv);
     void compileFile(path file);

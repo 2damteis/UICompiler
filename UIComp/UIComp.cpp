@@ -6,11 +6,13 @@
 using namespace std;
 
 string getUsage() {
-    return "Uso: UIComp.exe RUTA_PYUIC RUTA_A_COMPILAR[-w[intervalo]]\n\
+    return "Uso: UIComp.exe RUTA_PYUIC RUTA_A_COMPILAR[-l RUTA_QTDESIGNER RUTA_ARCHIVO [intervalo]]\n\
         RUTA_PYUIC: Ruta al ejecutable pyuic6.exe\n\
         RUTA_A_COMPILAR : Ruta del fichero o directorio que se desea compilar\n\
-        -w -W: Modo \"watch\". Si se activa, el programa continuará en segundo plano comprobando a cada intervalo si los archivos han sido modificados. Si es así, los compila de nuevo.\n\
-        intervalo: Intervalo en milisegundos trascurrido entre cada comprobación de los ficheros.";
+        -l --link: Modo \"link\"\n\
+        RUTA_QTDESIGNER: Ruta del designer.exe\n\
+        RUTA_ARCHIVO: Ruta del archivo .py o .uy actualmente seleccionado\n\
+        intervalo: Intervalo en milisegundos trascurrido entre cada comprobación de los ficheros\n";
 }
 
 int main(int argc, char** argv)
