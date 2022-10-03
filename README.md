@@ -4,7 +4,7 @@ Un pequeño programa de consola que actua como intermediario del traductor de Py
 
 uso:
 
-> UIComp.exe RUTA_PYUIC RUTA_A_COMPILAR[-w[intervalo]]
+> UIComp.exe RUTA_PYUIC RUTA_A_COMPILAR[-l RUTA_QTDESIGNER RUTA_ARCHIVO [intervalo]]
 
 RUTA_PYUIC: Ruta al ejecutable pyuic6.exe\
 RUTA_A_COMPILAR : Ruta del fichero o directorio que se desea compilar\
