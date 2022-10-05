@@ -13,12 +13,12 @@ uso:
 > **RUTA_ARCHIVO:** Ruta del archivo .py o .uy actualmente seleccionado\
 > **intervalo:** Intervalo en milisegundos trascurrido entre cada comprobación de los ficheros
 
-Lo ideal es usarlo como herramienta externa en pycharm, de modo que la ruta a compilar sea $ProjectFileDir$ y la ruta del archivo seleccionado, $FilePath$.
+Lo ideal es usarlo como herramienta externa en pycharm, de modo que la ruta a compilar sea ``$ProjectFileDir$`` y la ruta del archivo seleccionado, ``$FilePath$``.
 
 Ejemplo de uso como herramienta externa en pycharm:
 
 > **Program:** Ruta completa al UIComp_x64.exe\
-> **Arguments:** "RUTA_PYUIC" "$ProjectFileDir$" -l "RUTA_QTDESIGNER" "$FilePath$"\
-> **Working directory:** $ProjectFileDir$
+> **Arguments:** "RUTA_PYUIC" "``$ProjectFileDir$``" -l "RUTA_QTDESIGNER" "``$FilePath$``"\
+> **Working directory:** ``$ProjectFileDir$`` 
 
 NOTA: Poner las rutas en los argumentos entre comillas dobles, de modo que si hubiese espacios en ellas, no sería un problema.
